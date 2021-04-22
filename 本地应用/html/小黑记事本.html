@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小黑笔记本</title>
+    <link rel="stylesheet" href="../css/black.css">
+</head>
+
+<body>
+    <!-- 
+        1.新增 v-for指令结合数据生成 v-model指令设置和获取表单元素 v-on指令传递自定义参数
+        2.删除 点击删除指定内容(v-on splice)
+        3.统计 信息个数(v-text length)
+        4.清空 点击清楚所有信息(v-on清空数组) 
+        5.隐藏 (v-show v-if 数组非空) -->
+    <!-- 主体区域 -->
+    <section id="todoapp">
+        <!-- 输入框 -->
+        <header class="header">
+            <h1>小黑</h1>
+            <input v-model="inputValue" @keyup.enter="add" autofocus="autofocus" autocomplete="off" placeholder="请输入任务" class="new-todo">
+        </header>
+        <!-- 列表区域 -->
+        <section class="main">
+            <ul class="todo-list">
+                <li class="todo" v-for="(item,index) in list">
+                    <div class="view">
+                        <span class="index">{{ index+1 }}.</span>
+                        <label>{{ item }}</label>
+                        <button class="destroy" @click="remove(index)"></button>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <!-- 统计和清空 -->
+        <footer class="footer">
+            <span class="todo-count" v-if="list.length!=0"><strong>{{ list.length }}</strong>item left</span>
+            <button class="clear-completed" v-show="list.length !=0" @click="clear">clear</button>
+        </footer>
+
+    </section>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+            el: "#todoapp",
+            data: {
+                list: ["写代码", "赚钱", "睡觉"],
+                inputValue: "买房买车"
+            },
+            methods: {
+                // 添加数据
+                add: function() {
+                    this.list.push(this.inputValue);
+                },
+                // 删除数据
+                remove: function(index) {
+                    // console.log("删除");
+                    this.list.splice(index, 1);
+                },
+                clear: function() {
+                    this.list = [];
+                }
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
